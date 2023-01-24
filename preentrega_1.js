@@ -7,32 +7,56 @@ class ProductManager{
     static id= 0;
     // creacion de las propiedades y el metodo de agregar productos.
     addProduct(title, description, price, image, code, stock){
-        ProductManager.id++;
-        this.products.push({title, description, price, image, code, stock, id: ProductManager.id})
-    }
+        for (let i = 0; i < this.products.length; i++) {
+            if (this.products[i].code === code) {
+                    console.log(`el codigo ${code} esta repetido`);
+                    break;
+            }
+        }
+
+
+ 
+        const newProduct= {title, description, price, image, code, stock, }
+        if(!Object.values(newProduct).includes(undefined)){
+       
+       
+              ProductManager.id++;
+              this.products.push({...newProduct,
+              id:ProductManager.id,});
+              } else{
+                console.log("todos los campos son obligatorios");
+              }
+
+   }
+    
 //metodo obtener producto
+ 
     getProduct(){
         return this.products;
 
     }
+    existe(id) {
+        return this.products.find((producto) => producto.id === id)
+    }
     //metodo de validacion por id..
     getProductById(id){
-        if(this.products.find((producto) => producto.id === id)){
-            console.log ("existe"); 
-        }else{
-            console.log( "not found")
-        }
-
+        !this.existe(id) ? console.log ("not found") : console.log( this.existe(id))
     }
 }
 //testeo del codigo.
 const productos= new ProductManager
 
-console.log(productos.getProduct());
+// console.log(productos.getProduct());
 
 productos.addProduct("mayo", "food", 2250,"imagen", "abc123", 5 );
-productos.addProduct("ketchup", "food", 2000,"imagen", "abc1232", 4 );
+// productos.addProduct("ketchup", "food", 2000,"imagen", "abc123", 4 );
 
-console.log(productos.getProduct());
+// console.log(productos.getProduct());
+productos.addProduct("moztaza", "food", 2000,"imagen", "abc123", 4 );
+ //busqueda por id
+console.log(productos.getProductById(1));
 
-console.log(productos.getProductById(4));
+//busqueda por id no encontrado
+
+console.log(productos.getProductById(6));
+
